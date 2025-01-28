@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { inputClass } from "../lib/styles";
 import { Check, Eye, EyeClosed } from "lucide-react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../api/api";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -24,6 +25,8 @@ const Register = () => {
         password,
         re_password: rePassword,
       };
+      const response = registerUser(data);
+      console.log(response);
       console.log(data);
     } catch (error: any) {
       setError(error);

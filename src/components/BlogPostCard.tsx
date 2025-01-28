@@ -1,39 +1,74 @@
 import { Calendar, Feather } from "lucide-react";
-import { postSample } from "../data/post";
 import { formatDate } from "../lib/utils";
 import { Link } from "react-router-dom";
+import { Post } from "../lib/types";
 
-const BlogPostCard = () => {
+const BlogPostCard = ({
+  title,
+  created_at,
+  content,
+  slug,
+  thumbnail,
+  author_username,
+  category_name,
+}: Post) => {
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength).trim() + "...";
+  };
+
   return (
-    <Link
-      to=""
-      className="max-w-md mx-auto mt-10 overflow-hidden rounded-lg shadow-lg relative h-64"
-      style={{
-        backgroundImage: `url(${postSample.thumbnail})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
-      <div className="relative h-full p-6 flex flex-col justify-between">
-        <div className="flex justify-between">
-          <span className="text-white font-semibold flex items-center gap-1">
-            <Feather size={16} /> {postSample.author_username}
-          </span>
-          <span className="text-white font-semibold flex items-center gap-1">
-            <Calendar size={16} /> {formatDate(postSample.created_at)}
-          </span>
+    <div className="w-full max-w-md mx-auto mt-10">
+      <Link
+        to={`/posts/${slug}`}
+        className="block bg-gray-100 border border-black hover:drop-shadow-sm overflow-hidden transition duration-200"
+      >
+        {/* Image Container */}
+        <div
+          className="h-48 w-full relative bg-gray-100"
+          style={
+            thumbnail
+              ? {
+                  backgroundImage: `url('${thumbnail}')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        >
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-300/90" />
         </div>
-        <div className="w-3/4">
-          <h1 className="text-2xl font-bold text-white mb-3 line-clamp-2">
-            {postSample.title}
-          </h1>
-          <p className="text-gray-200 text-sm line-clamp-3">
-            {postSample.content.slice(0, 150)}...
+
+        {/* Content Container */}
+        <div className="p-6 bg-gray-100">
+          {/* Meta Information */}
+          <div className="flex justify-between items-center mb-4 ">
+            <span className="flex items-center gap-1">
+              <Feather size={16} />
+              <span className="text-sm">{author_username}</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <Calendar size={16} />
+              <span className="text-sm">{formatDate(created_at)}</span>
+            </span>
+          </div>
+
+          {/* Title and Content */}
+          <h1 className="text-xl font-bold mb-2 line-clamp-2">{title}</h1>
+          <p className=" text-sm mb-4 line-clamp-3">
+            {truncateText(content, 150)}
           </p>
+
+          {/* Category Tag */}
+          <div className="flex justify-between items-center">
+            <span className="inline-block bg-slate-700 text-slate-200 text-sm px-3 py-1 rounded-full">
+              {category_name}
+            </span>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

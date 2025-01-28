@@ -11,8 +11,8 @@ export interface Post {
   id: number;
   title: string;
   content: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   author: number;
   author_username: string;
   category: number;
@@ -34,4 +34,23 @@ export interface Posts {
   next: string | null;
   previous: string | null;
   results: Post[];
+}
+
+export interface registerData {
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+  re_password: string;
+}
+
+export interface loginData {
+  username: string;
+  password: string;
+}
+
+export interface AuthContextType {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (value: boolean) => void;
 }
