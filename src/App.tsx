@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route element={<PublicRoute />}>

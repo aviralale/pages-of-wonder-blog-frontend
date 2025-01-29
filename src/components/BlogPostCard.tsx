@@ -18,7 +18,7 @@ const BlogPostCard = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-10">
+    <div className="w-full max-w-md mx-auto ">
       <Link
         to={`/posts/${slug}`}
         className="block bg-gray-100 border border-black hover:drop-shadow-sm overflow-hidden transition duration-200"

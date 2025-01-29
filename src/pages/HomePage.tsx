@@ -3,6 +3,7 @@ import { axiosInstance } from "../api/api";
 import { Post } from "../lib/types";
 import BlogPostCard from "../components/BlogPostCard";
 import { Search } from "lucide-react";
+import Navbar from "../components/Navbar";
 
 const HomePage = () => {
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
@@ -27,8 +28,10 @@ const HomePage = () => {
   useEffect(() => {
     if (searchTerm) {
       setIsSearching(true);
-      const filtered = blogPosts.filter((post) =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase())
+      const filtered = blogPosts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          post.author_username.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredPosts(filtered);
     } else {
@@ -52,19 +55,22 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen  py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto flex flex-col gap-4">
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center  ">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">
-            Latest Blog Posts
+            Pages of Wonder
           </h1>
+          <div className="relative">
+            <Navbar />
+          </div>
 
           {/* Search Bar */}
-          <div className="max-w-xl mx-auto relative">
+          <div className="max-w-xl mx-auto">
             <div className="relative">
               <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black"
                 size={20}
               />
               <input
@@ -72,7 +78,7 @@ const HomePage = () => {
                 placeholder="Search posts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200 outline-none"
+                className="w-full pl-10 pr-4 py-3 border border-black  transition-colors duration-200 outline-none"
               />
             </div>
           </div>
@@ -95,7 +101,7 @@ const HomePage = () => {
           </div>
         ) : (
           /* Posts Grid */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
             {filteredPosts.map((post) => (
               <div
                 key={`${post.author}${post.category}${post.id}${
